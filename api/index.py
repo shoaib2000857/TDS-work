@@ -45,13 +45,10 @@ async def metrics(request: Request):
         latencies = [d["latency_ms"] for d in region_data]
         uptimes = [d["uptime_pct"] for d in region_data]
         breaches = sum(1 for d in region_data if d["latency_ms"] > threshold)
-        avg_latency = float(np.mean(latencies)) if latencies else None
-        p95_latency = float(np.percentile(latencies, 95)) if latencies else None
-        avg_uptime = float(np.mean(uptimes)) if uptimes else None
         result[region] = {
-            "avg_latency": avg_latency,
-            "p95_latency": p95_latency,
-            "avg_uptime": avg_uptime,
+            "avg_latency": float(np.mean(latencies)),
+            "p95_latency": float(np.percentile(latencies, 95)),
+            "avg_uptime": float(np.mean(uptimes)),
             "breaches": breaches
         }
-    return JSONResponse(result)
+    return result   # ✅ not JSONResponse

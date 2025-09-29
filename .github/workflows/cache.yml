@@ -22,7 +22,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Prime cache
+      - name: prime-cache-e1197a5
+
         run: echo "Cache hit? ${{ steps.cache.outputs.cache-hit }}"
 
       - name: Install dependencies

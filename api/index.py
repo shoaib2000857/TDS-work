@@ -21,6 +21,19 @@ def load_telemetry():
     with open(data_path, "r") as f:
         return json.load(f)
 
+@app.options("/metrics")
+async def options_metrics():
+    return JSONResponse(
+        content={},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        },
+    )
+
+
+
 # ✅ POST endpoint
 @app.post("/metrics")
 async def metrics(request: Request):

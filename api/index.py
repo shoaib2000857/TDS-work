@@ -34,6 +34,7 @@ async def options_metrics():
 
 
 
+
 # ✅ POST endpoint
 @app.post("/metrics")
 async def metrics(request: Request):

@@ -1,0 +1,31 @@
+name: CI with Caching
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cache Python dependencies (example: pip cache)
+      - name: Cache pip
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-e1197a5
+
+      - name: prime-cache-e1197a5
+        run: echo "Cache result: ${{ steps.cache-deps.outputs.cache-hit }}"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt || true
+
+      - name: Run tests
+        run: echo "✅ Tests would run here"

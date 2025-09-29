@@ -13,16 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Cache Python dependencies (example: pip cache)
       - name: Cache pip
-        id: cache-deps
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: cache-e1197a5
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: prime-cache-e1197a5
-        run: echo "Cache result: ${{ steps.cache-deps.outputs.cache-hit }}"
+      - name: Prime cache
+        run: echo "Cache hit? ${{ steps.cache.outputs.cache-hit }}"
 
       - name: Install dependencies
         run: pip install -r requirements.txt || true
